@@ -31,18 +31,21 @@ def visualize_distributions(frame: DataFrame):
     temp_frame = frame[['power', 'toughness', 'textCount', 'convertedManaCost']]
     print(temp_frame.head(3))
 
-    sns.distplot(temp_frame.convertedManaCost.map(int).values, bins=np.arange(0, 16), kde_kws={'bw': 1},
+    ax = sns.distplot(temp_frame.convertedManaCost.map(int).values, bins=np.arange(0, 16), kde_kws={'bw': 1},
                  hist_kws=dict(ec="k"))
+    ax.set(xlabel='Total mana cost', ylabel='Distribution')
     plt.show()
     plt.clf()
-    sns.distplot(temp_frame.textCount.map(int).values, kde_kws={'bw': 1}, hist_kws=dict(ec="k"))
+    ax = sns.distplot(temp_frame.textCount.map(int).values, kde_kws={'bw': 1}, hist_kws=dict(ec="k"))
+    ax.set(xlabel='Total words in text', ylabel='Distribution')
     plt.show()
     plt.clf()
 
 
 def visualize_text_cost(frame: DataFrame):
     temp_frame = frame[['convertedManaCost', 'textCount']]
-    sns.boxplot(x="convertedManaCost", y="textCount", data=temp_frame)
+    ax = sns.boxplot(x="convertedManaCost", y="textCount", data=temp_frame)
+    ax.set(xlabel='Total mana cost', ylabel='Total words in text')
     plt.show()
     plt.clf()
 
