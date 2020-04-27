@@ -11,3 +11,4 @@ def generate_idf_vectors(dataframe: pandas.DataFrame, mask, column: str):
 
     train_tokens = tokenizer.transform(train_frame[column])
     test_tokens = tokenizer.transform(test_frame[column])
+    return train_tokens, test_tokens
