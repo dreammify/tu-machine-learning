@@ -51,5 +51,5 @@ def load_accidents_frame(filename: str):
 
 if __name__ == "__main__":
     data = load_accidents_frame("resources/accidents_2005_to_2007.csv")
-    # visualize_dist(data)
+    visualize_dist(data)
     visualize_day_severity(data)
