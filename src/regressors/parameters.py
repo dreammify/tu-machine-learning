@@ -37,7 +37,6 @@ class ParameterSearchHost:
             raise Exception("Host already trained")
 
         for p in self.parameters_to_search:
-            print("Training model for parameter: " + str(p))
             model = self.regressor_factory(p)
 
             if self.scale:
@@ -74,7 +73,24 @@ class ParameterSearchHost:
             if self.test_scores is not None:
                 ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
             ax.set_title(title, fontsize=16)
-            ax.set_xlabel('Parameter (Factory: ' + self.regressor_factory.__name__ + ')', fontsize=14)
+            ax.set_xlabel('Parameter ' + self.regressor_factory.__name__, fontsize=14)
+            ax.set_ylabel('Accuracy', fontsize=14)
+            ax.set_ylim(ylim)
+            ax.set_xticks(self.parameters_to_search)
+            ax.legend()
+            plt.show()
+        elif self.plot_type== "log":
+            fig, ax = plt.subplots(1,1, figsize=(15,5))
+            ax.plot(self.parameters_to_search, self.cv_scores_mean, '-o', label='mean cross-validation accuracy', alpha=0.9)
+            ax.fill_between(self.parameters_to_search, self.cv_scores_mean-2*self.cv_scores_std, self.cv_scores_mean+2*self.cv_scores_std, alpha=0.2)
+            ylim = plt.ylim()
+            ax.set_xscale("log")
+
+            ax.plot(self.parameters_to_search, self.train_scores, '-*', label='train accuracy', alpha=0.9)
+            if self.test_scores is not None:
+                ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
+            ax.set_title(title, fontsize=16)
+            ax.set_xlabel('Parameter ' + self.regressor_factory.__name__, fontsize=14)
             ax.set_ylabel('Accuracy', fontsize=14)
             ax.set_ylim(ylim)
             ax.set_xticks(self.parameters_to_search)

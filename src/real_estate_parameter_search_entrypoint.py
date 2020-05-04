@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
     host_list = [
         Hosts.decision_tree_host,
-        Hosts.logistic_regression_host_C,
-        Hosts.logistic_regression_host_penalty,
+        Hosts.kernel_ridge_host_alpha,
+        Hosts.kernel_ridge_host_gamma,
         Hosts.linear_svr_host_C,
         Hosts.gaussian_svr_host_C,
         Hosts.gaussian_svr_host_d
@@ -23,6 +23,8 @@ if __name__ == "__main__":
     for host in host_list:
         try:
             execute_host_search(host)
-        except Exception:
-            pass
+        except Exception as e:
+            print("HOST FAILED")
+            print(host.regressor_factory)
+            print(e)
 
