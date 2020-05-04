@@ -13,6 +13,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.tree import DecisionTreeRegressor
+from src.utilities.plot_param import GridSearch1DHost
+
 
 def load_data():
     url='https://archive.ics.uci.edu/ml/machine-learning-databases/00492/Metro_Interstate_Traffic_Volume.csv.gz'
@@ -36,6 +39,7 @@ def onehot_encoding(data):
     return onehot_encoded
 
 if __name__ == "__main__":
+    print("Loading data")
     dataset=load_data()
     one_holiday = onehot_encoding(dataset['holiday'])
     one_wmain = onehot_encoding(dataset['weather_main'])
@@ -43,6 +47,7 @@ if __name__ == "__main__":
     one_day = onehot_encoding(dataset['dayofweek'])
     one_hour = onehot_encoding(dataset['hour'])
 
+    print("Preparing train-test split")
     #Splitting the dataset into Training set and Test Set
     X=dataset.iloc[:, 1:5].values
     X=np.concatenate((one_holiday,X,one_wmain,one_wdesc,one_day,one_hour),axis=1)
@@ -50,17 +55,25 @@ if __name__ == "__main__":
 
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size= 0.2, random_state= 0)
 
+    print("Normalizing values")
     #Standardisation
     std= StandardScaler()
     x_train= std.fit_transform(x_train)
     x_test=std.transform(x_test)
-    
-    import plot_depthoftree as depth
 
+    def decision_tree_factory(depth):
+        return DecisionTreeRegressor(max_depth=depth)
+
+    print("Preparing decision trees")
     sm_tree_depths = range(1,20)
-    sm_cv_scores_mean, sm_cv_scores_std, sm_accuracy_scores = depth.run_cross_validation_on_trees(X, y, sm_tree_depths)
+    host = GridSearch1DHost(
+        parameters=range(1,20),
+        regressor_factory=decision_tree_factory,
+        scale=True,
+        cv=10
+    )
 
-    # plotting accuracy
-    depth.plot_cross_validation_on_trees(sm_tree_depths, sm_cv_scores_mean, sm_cv_scores_std, sm_accuracy_scores, 
-                               'Accuracy per decision tree depth for Traffic Volume')
+    host.do_search(x_train, y_train)
+
+    host.plot_search("Accuracy per decision tree depth for Traffic Volume")
     
