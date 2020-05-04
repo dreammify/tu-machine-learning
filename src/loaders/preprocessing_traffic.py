@@ -67,7 +67,7 @@ if __name__ == "__main__":
     print("Preparing decision trees")
     sm_tree_depths = range(1,20)
     host = ParameterSearchHost(
-        parameters=range(1,20),
+        parameters=range(1,50),
         regressor_factory=decision_tree_factory,
         scale=True,
         cv=10
