@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 class ParameterSearchHost:
-    def __init__(self, parameters, regressor_factory, scale=True, cv=10):
+    def __init__(self, parameters, regressor_factory, scale=True, cv=10, plot_type="linear"):
         # Keep trained models here
         self.regressor_list = []
         # Make models with the regressor factory provided, this should be a
@@ -17,6 +17,8 @@ class ParameterSearchHost:
         self.scale = scale
         # How many crossvalidation folds to do
         self.cv = cv
+        # How to plot
+        self.plot_type = plot_type
 
         # Whether this host has already been trained
         self._trained = False
@@ -62,18 +64,19 @@ class ParameterSearchHost:
             self.test_scores.append(model.score(x_test, y_test))
 
     def plot_search(self, title):
-        fig, ax = plt.subplots(1,1, figsize=(15,5))
-        ax.plot(self.parameters_to_search, self.cv_scores_mean, '-o', label='mean cross-validation accuracy', alpha=0.9)
-        ax.fill_between(self.parameters_to_search, self.cv_scores_mean-2*self.cv_scores_std, self.cv_scores_mean+2*self.cv_scores_std, alpha=0.2)
-        ylim = plt.ylim()
+        if self.plot_type== "linear":
+            fig, ax = plt.subplots(1,1, figsize=(15,5))
+            ax.plot(self.parameters_to_search, self.cv_scores_mean, '-o', label='mean cross-validation accuracy', alpha=0.9)
+            ax.fill_between(self.parameters_to_search, self.cv_scores_mean-2*self.cv_scores_std, self.cv_scores_mean+2*self.cv_scores_std, alpha=0.2)
+            ylim = plt.ylim()
 
-        ax.plot(self.parameters_to_search, self.train_scores, '-*', label='train accuracy', alpha=0.9)
-        if self.test_scores is not None:
-            ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
-        ax.set_title(title, fontsize=16)
-        ax.set_xlabel('Parameter', fontsize=14)
-        ax.set_ylabel('Accuracy', fontsize=14)
-        ax.set_ylim(ylim)
-        ax.set_xticks(self.parameters_to_search)
-        ax.legend()
-        plt.show()
+            ax.plot(self.parameters_to_search, self.train_scores, '-*', label='train accuracy', alpha=0.9)
+            if self.test_scores is not None:
+                ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
+            ax.set_title(title, fontsize=16)
+            ax.set_xlabel('Parameter', fontsize=14)
+            ax.set_ylabel('Accuracy', fontsize=14)
+            ax.set_ylim(ylim)
+            ax.set_xticks(self.parameters_to_search)
+            ax.legend()
+            plt.show()
