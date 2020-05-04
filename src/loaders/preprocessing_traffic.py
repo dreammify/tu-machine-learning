@@ -74,6 +74,7 @@ if __name__ == "__main__":
     )
 
     host.do_search(x_train, y_train)
+    host.do_test(x_test, y_test)
 
     host.plot_search("Accuracy per decision tree depth for Traffic Volume")
     
