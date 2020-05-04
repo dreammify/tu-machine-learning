@@ -54,3 +54,13 @@ if __name__ == "__main__":
     std= StandardScaler()
     x_train= std.fit_transform(x_train)
     x_test=std.transform(x_test)
+    
+    import plot_depthoftree as depth
+
+    sm_tree_depths = range(1,20)
+    sm_cv_scores_mean, sm_cv_scores_std, sm_accuracy_scores = depth.run_cross_validation_on_trees(X, y, sm_tree_depths)
+
+    # plotting accuracy
+    depth.plot_cross_validation_on_trees(sm_tree_depths, sm_cv_scores_mean, sm_cv_scores_std, sm_accuracy_scores, 
+                               'Accuracy per decision tree depth for Traffic Volume')
+    
