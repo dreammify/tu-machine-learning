@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 class ParameterSearchHost:
-    def __init__(self, parameters, regressor_factory, scale=True, cv=10, plot_type="linear"):
+    def __init__(self, parameters, regressor_factory, scale=True, cv=5, plot_type="linear"):
         # Keep trained models here
         self.regressor_list = []
         # Make models with the regressor factory provided, this should be a
@@ -74,7 +74,7 @@ class ParameterSearchHost:
             if self.test_scores is not None:
                 ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
             ax.set_title(title, fontsize=16)
-            ax.set_xlabel('Parameter', fontsize=14)
+            ax.set_xlabel('Parameter (Factory: ' + self.regressor_factory.__name__ + ')', fontsize=14)
             ax.set_ylabel('Accuracy', fontsize=14)
             ax.set_ylim(ylim)
             ax.set_xticks(self.parameters_to_search)
