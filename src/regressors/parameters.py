@@ -63,6 +63,9 @@ class ParameterSearchHost:
             self.test_scores.append(model.score(x_test, y_test))
 
     def plot_search(self, title):
+        print("Results for: " + self.regressor_factory.__name__)
+        print("Best train score: " + str(np.amax(self.train_scores)))
+        print("Best test score: " + str(np.amax(self.test_scores)))
         if self.plot_type== "linear":
             fig, ax = plt.subplots(1,1, figsize=(15,5))
             ax.plot(self.parameters_to_search, self.cv_scores_mean, '-o', label='mean cross-validation accuracy', alpha=0.9)

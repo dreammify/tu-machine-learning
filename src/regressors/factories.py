@@ -1,5 +1,4 @@
 from sklearn.kernel_ridge import KernelRidge
-from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVR, SVR
 from sklearn.tree import DecisionTreeRegressor
 from src.regressors.parameters import ParameterSearchHost
@@ -19,8 +18,11 @@ def linear_svm_C(c_value):
 def gaussian_svm_C(c_value):
     return SVR(C=c_value)
 
-def gaussian_svm_Degree(degree):
-    return SVR(degree=degree)
+def poly_svm_C(c_value):
+    return SVR(kernel="poly", C=c_value)
+
+def poly_svm_Degree(degree):
+    return SVR(kernel="poly",degree=degree, C=10)
 
 class Hosts:
     decision_tree_host = ParameterSearchHost(
@@ -52,7 +54,13 @@ class Hosts:
         plot_type="log"
     )
 
-    gaussian_svr_host_d = ParameterSearchHost(
+    poly_svr_host_C = ParameterSearchHost(
+        parameters=[0.01, 0.1, 1, 10, 100],
+        regressor_factory=poly_svm_C,
+        plot_type="log"
+    )
+
+    poly_svr_host_d = ParameterSearchHost(
         parameters=range(1,20),
-        regressor_factory=gaussian_svm_Degree
+        regressor_factory=poly_svm_Degree
     )

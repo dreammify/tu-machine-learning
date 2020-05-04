@@ -12,7 +12,8 @@ if __name__ == "__main__":
         Hosts.kernel_ridge_host_gamma,
         Hosts.linear_svr_host_C,
         Hosts.gaussian_svr_host_C,
-        Hosts.gaussian_svr_host_d
+        Hosts.poly_svr_host_C,
+        Hosts.poly_svr_host_d
     ]
 
     def execute_host_search(host):
