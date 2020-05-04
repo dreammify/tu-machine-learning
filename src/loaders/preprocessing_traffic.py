@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeRegressor
-from src.utilities.plot_param import ParameterSearchHost
+from src.regressors.parameters import ParameterSearchHost
 
 
 def load_data():

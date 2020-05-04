@@ -1,9 +1,7 @@
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import LinearSVR, SVR
 from sklearn.tree import DecisionTreeRegressor
-
-from src.utilities.plot_param import ParameterSearchHost
-
+from src.regressors.parameters import ParameterSearchHost
 
 def decision_tree_factory(depth):
     return DecisionTreeRegressor(max_depth=depth)

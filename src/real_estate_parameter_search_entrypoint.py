@@ -1,13 +1,6 @@
-from concurrent.futures.thread import ThreadPoolExecutor
-
 from pandas import read_excel
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVR, SVR
-from sklearn.tree import DecisionTreeRegressor
 import src.loaders.preprocessing_realestate as realest
-import src.regressors.factories as factories
 from src.regressors.factories import Hosts
-from src.utilities.plot_param import ParameterSearchHost
 
 if __name__ == "__main__":
     dataset = read_excel('loaders/resources/Real_estate_valuation_data_set.xlsx')

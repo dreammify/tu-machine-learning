@@ -1,12 +1,7 @@
 from concurrent.futures.thread import ThreadPoolExecutor
 
-from sklearn.linear_model import LogisticRegression
-from sklearn.svm import LinearSVR, SVR
-from sklearn.tree import DecisionTreeRegressor
 import src.loaders.preprocessing_traffic as traffic
-import src.regressors.factories as factories
 from src.regressors.factories import Hosts
-from src.utilities.plot_param import ParameterSearchHost
 
 if __name__ == "__main__":
     dataset = traffic.load_data()
