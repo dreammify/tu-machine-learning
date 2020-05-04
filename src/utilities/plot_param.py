@@ -27,10 +27,8 @@ class ParameterSearchHost:
         self.cv_scores_mean = []
 
         self.train_scores = []
-        self.test_scores = []
 
-        self.cv_mean = None
-        self.cv_std = None
+        self.test_scores = None
 
     def do_search(self, x_train, y_train):
         if self._trained:
@@ -51,23 +49,29 @@ class ParameterSearchHost:
             self.cv_scores_mean.append(cv_scores.mean())
             self.cv_scores_std.append(cv_scores.std())
             self.train_scores.append(model.fit(x_train, y_train).score(x_train, y_train))
+            self.regressor_list.append(model)
 
         self.cv_scores_mean = np.array(self.cv_scores_mean)
         self.cv_scores_std = np.array(self.cv_scores_std)
         self.train_scores = np.array(self.train_scores)
         return self.cv_scores_mean, self.cv_scores_std, self.train_scores
 
-    def do_test(self, x_train, y_train):
-        pass
+    def do_test(self, x_test, y_test):
+        self.test_scores = []
+        for model in self.regressor_list:
+            self.test_scores.append(model.score(x_test, y_test))
 
     def plot_search(self, title):
         fig, ax = plt.subplots(1,1, figsize=(15,5))
         ax.plot(self.parameters_to_search, self.cv_scores_mean, '-o', label='mean cross-validation accuracy', alpha=0.9)
         ax.fill_between(self.parameters_to_search, self.cv_scores_mean-2*self.cv_scores_std, self.cv_scores_mean+2*self.cv_scores_std, alpha=0.2)
         ylim = plt.ylim()
+
         ax.plot(self.parameters_to_search, self.train_scores, '-*', label='train accuracy', alpha=0.9)
+        if self.test_scores is not None:
+            ax.plot(self.parameters_to_search, self.test_scores, '-*', label='test accuracy', alpha=0.9)
         ax.set_title(title, fontsize=16)
-        ax.set_xlabel('Tree depth', fontsize=14)
+        ax.set_xlabel('Parameter', fontsize=14)
         ax.set_ylabel('Accuracy', fontsize=14)
         ax.set_ylim(ylim)
         ax.set_xticks(self.parameters_to_search)
