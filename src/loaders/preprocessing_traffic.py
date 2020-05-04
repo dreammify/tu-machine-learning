@@ -38,9 +38,8 @@ def onehot_encoding(data):
     onehot_encoded = onehot_encoder.fit_transform(integer_encoded)
     return onehot_encoded
 
-if __name__ == "__main__":
+def preprocess_data(dataset):
     print("Loading data")
-    dataset=load_data()
     one_holiday = onehot_encoding(dataset['holiday'])
     one_wmain = onehot_encoding(dataset['weather_main'])
     one_wdesc = onehot_encoding(dataset['weather_description'])
@@ -60,6 +59,12 @@ if __name__ == "__main__":
     std= StandardScaler()
     x_train= std.fit_transform(x_train)
     x_test=std.transform(x_test)
+
+    return x_train, x_test, y_train, y_test
+
+if __name__ == "__main__":
+    dataset = load_data()
+    x_train, x_test, y_train, y_test = preprocess_data(dataset)
 
     def decision_tree_factory(depth):
         return DecisionTreeRegressor(max_depth=depth)
