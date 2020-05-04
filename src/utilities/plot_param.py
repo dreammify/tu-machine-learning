@@ -4,7 +4,7 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-class GridSearch1DHost:
+class ParameterSearchHost:
     def __init__(self, parameters, regressor_factory, scale=True, cv=10):
         # Keep trained models here
         self.regressor_list = []

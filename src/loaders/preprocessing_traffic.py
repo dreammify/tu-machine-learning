@@ -14,7 +14,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.tree import DecisionTreeRegressor
-from src.utilities.plot_param import GridSearch1DHost
+from src.utilities.plot_param import ParameterSearchHost
 
 
 def load_data():
@@ -66,7 +66,7 @@ if __name__ == "__main__":
 
     print("Preparing decision trees")
     sm_tree_depths = range(1,20)
-    host = GridSearch1DHost(
+    host = ParameterSearchHost(
         parameters=range(1,20),
         regressor_factory=decision_tree_factory,
         scale=True,
