@@ -1,9 +1,9 @@
 import time
-from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
 
 class LinearWrapper:
-    def __init__(self):
-        self.regressor = LinearRegression()
+    def __init__(self, degree=3, gamma='scale', C=1.0, max_iter=-1):
+        self.regressor = SVR(degree=degree, gamma=gamma, C=C, max_iter=max_iter)
         self.training_time = None
 
     def train(self, x_train, y_train):
