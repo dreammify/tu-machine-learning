@@ -3,6 +3,7 @@ import gc
 import numpy
 import pandas
 import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
 
 from src.data.idf_dataset import generate_idf_vectors
 from src.loaders.load_news import load_news_frame_pop
@@ -44,8 +45,14 @@ def svr_hint_headline_progressive(data, mask, hint_time, classifier):
         temp_testv = test_vectors.toarray()
 
         train_hint, test_hint = generate_targets(data, mask, 'TS' + str(i))
+
         train_hint = train_hint.to_numpy().reshape(-1, 1)
         test_hint = test_hint.to_numpy().reshape(-1, 1)
+
+        scaler = StandardScaler()
+        scaler.fit(train_hint)
+        train_hint = scaler.transform(train_hint)
+        test_hint = scaler.transform(test_hint)
 
         temp_trainv = numpy.concatenate((temp_trainv, train_hint), axis=1)
         temp_testv = numpy.concatenate((temp_testv, test_hint), axis=1)
@@ -66,9 +73,6 @@ def svr_hint_headline_progressive(data, mask, hint_time, classifier):
     plt.plot(both_test, 'g^')
     plt.show()
 
-
-
-
 if __name__ == "__main__":
     # Load data
     print("Loading data")
@@ -87,5 +91,5 @@ if __name__ == "__main__":
         data=data,
         mask=mask,
         hint_time=range(1, 74, 2),
-        classifier = SVMWrapper(c=1, e=0.0, loss="epsilon_insensitive", dual=True, max_iter=10000)
+        classifier = SVMWrapper(c=1, e=0.0, loss="epsilon_insensitive", dual=True, max_iter=1000)
     )
