@@ -44,10 +44,10 @@ if __name__ == "__main__":
     x_train, x_test, y_train, y_test = get_train_test_split_with_average_popularity(data)
 
     host_list = [
-        Hosts.decision_tree_host,
+        Hosts.linear_svr_host_C,
         Hosts.kernel_ridge_host_alpha,
         Hosts.kernel_ridge_host_gamma,
-        Hosts.linear_svr_host_C,
+        Hosts.decision_tree_host,
         Hosts.gaussian_svr_host_C,
         Hosts.poly_svr_host_C,
         Hosts.poly_svr_host_d
