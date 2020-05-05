@@ -1,0 +1,24 @@
+Results for: decision_tree_depth
+Best parameter: 24
+Best train score: 0.9804425236236939
+Best test score: 0.9192174367786697
+Results for: kernel_ridge_alpha
+Best parameter: 0.1
+Best train score: 0.9720420572935459
+Best test score: 0.7029235955194221
+Results for: kernel_ridge_gamma
+Best parameter: 0.001
+Best train score: 0.9465557830002529
+Best test score: 0.9248833706089995
+Results for: linear_svm_C
+Best parameter: 10
+Best train score: 0.8093760479074463
+Best test score: 0.8147713110315149
+Results for: gaussian_svm_C
+Best parameter: 100
+Best train score: 0.7947950539079185
+Best test score: 0.7822192705511659
+Results for: poly_svm_C
+Best parameter: 100
+Best train score: 0.5016607603190548
+Best test score: 0.4694447163835942
