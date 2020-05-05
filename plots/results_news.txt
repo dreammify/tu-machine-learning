@@ -1,0 +1,8 @@
+Results for: linear_svm_C
+Best parameter: 100
+Best train score: 0.9436559945807851
+Best test score: 0.9324048868545555
+Results for: decision_tree_depth
+Best parameter: 9
+Best train score: 0.9636967922798171
+Best test score: 0.9268632901953683
