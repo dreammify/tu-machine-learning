@@ -18,8 +18,8 @@ def get_train_test_split_with_average_popularity(data):
     tokenizer = TfidfVectorizer(strip_accents='unicode', min_df=10)
     tokenizer.fit(train_frame["Headline"])
 
-    train_tokens = tokenizer.transform(train_frame["Headline"]).toarray()
-    test_tokens = tokenizer.transform(test_frame["Headline"]).toarray()
+    train_tokens = tokenizer.transform(train_frame["Headline"])
+    test_tokens = tokenizer.transform(test_frame["Headline"])
 
     train_labels = train_frame["avg"].to_numpy()
     test_labels = test_frame["avg"].to_numpy()
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     def execute_host_search(host):
         host.do_search(x_train, y_train)
         host.do_test(x_test, y_test)
-        host.plot_search("Accuracy per parameters for Traffic Volume")
+        host.plot_search("Accuracy per parameters for news popularity")
 
     for host in host_list:
         try:
